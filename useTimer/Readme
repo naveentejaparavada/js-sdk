@@ -1,0 +1,92 @@
+# useTimer & useStopwatch Hooks
+
+## Overview
+
+This project provides two custom React hooks: `useTimer` and `useStopwatch`. These hooks allow you to manage timer and stopwatch functionalities within your React application.
+
+## Installation
+
+No additional dependencies are required. Simply copy the code into your project and import the hooks where needed.
+
+## Hooks
+
+### `useTimer`
+
+The `useTimer` hook manages a simple timer that counts elapsed seconds when started.
+
+#### **State Variables**
+
+- `isRunning` (boolean): Indicates if the timer is currently running.
+- `elapsedTime` (number): The total elapsed time in seconds.
+
+#### **Methods**
+
+- `setIsRunning(boolean)`: Starts or stops the timer.
+- `setElapsedTime(number)`: Manually updates the elapsed time.
+
+#### **Usage**
+
+```jsx
+import { useTimer } from "./path-to-hook";
+
+const TimerComponent = () => {
+  const { isRunning, setIsRunning, elapsedTime } = useTimer();
+
+  return (
+    <div>
+      <p>Elapsed Time: {elapsedTime} seconds</p>
+      <button onClick={() => setIsRunning(!isRunning)}>{isRunning ? "Pause" : "Start"}</button>
+    </div>
+  );
+};
+```
+
+### `useStopwatch`
+
+The `useStopwatch` hook extends `useTimer` to provide stopwatch functionalities, including lap tracking and resetting.
+
+#### **State Variables**
+
+- `elapsedTime` (number): The total elapsed time in seconds.
+- `laps` (array): Stores lap times.
+- `isRunning` (boolean): Indicates if the stopwatch is running.
+
+#### **Methods**
+
+- `startTimer()`: Starts the stopwatch.
+- `stopTimer()`: Stops the stopwatch.
+- `resetTimer()`: Resets the stopwatch and clears laps.
+- `addLap()`: Records a lap time.
+
+#### **Usage**
+
+```jsx
+import { useStopwatch } from "./path-to-hook";
+
+const StopwatchComponent = () => {
+  const { elapsedTime, laps, addLap, resetTimer, startTimer, stopTimer, isRunning } =
+    useStopwatch();
+
+  return (
+    <div>
+      <p>Elapsed Time: {elapsedTime} seconds</p>
+      <button onClick={isRunning ? stopTimer : startTimer}>{isRunning ? "Stop" : "Start"}</button>
+      <button onClick={addLap} disabled={!isRunning}>
+        Lap
+      </button>
+      <button onClick={resetTimer}>Reset</button>
+      <ul>
+        {laps.map((lap, index) => (
+          <li key={index}>
+            Lap {index + 1}: {lap} seconds
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+```
+
+## License
+
+This project is open-source and free to use under the MIT License.
